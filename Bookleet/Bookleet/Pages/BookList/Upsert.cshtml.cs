@@ -41,6 +41,15 @@ namespace Bookleet.Pages.BookList
         {
             if (ModelState.IsValid)
             {
+                if (Book.Id == 0)
+                {
+                    _db.Book.Add(Book);
+                }
+                else
+                {
+                    _db.Book.Update(Book);
+                }
+
                 var BookFromDb = await _db.Book.FindAsync(Book.Id);
                 BookFromDb.Name = Book.Name;
                 BookFromDb.ISBN = Book.ISBN;
