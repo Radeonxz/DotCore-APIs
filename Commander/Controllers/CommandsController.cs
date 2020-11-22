@@ -5,13 +5,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Commander.Controllers
 {
+    private readonly ICommanderRepo _repository;
+
+    public CommandsController(ICommanderRepo repository)
+    {
+        _repository = repository;
+    }
+
     // api/commands
     // [Route("api/[controller]")]
     [Route("api/commands")]
     [ApiController]
     public class CommandsController : ControllerBase
     {
-        private readonly MockCoommanderRepo _repository = new MockCommanderRepo();
+        // private readonly MockCoommanderRepo _repository = new MockCommanderRepo();
         // GET api/commands
         [HttpGet]
         public ActionResult <IEnumerable<Commander>> GetAllCommands()
