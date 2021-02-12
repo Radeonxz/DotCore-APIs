@@ -1,3 +1,5 @@
+using Systems.ComponentModel.DataAnnotations;
+
 namespace Commander.Models
 {
     public class Command
