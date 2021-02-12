@@ -2,14 +2,21 @@ namespace Commander.Data
 {
     public class SqlCommanderRepo : ICommanderRepo
     {
-        public IEnumberable<Command> GetAllCommands()
+        private readonly CommanderContext _context;
+
+        public SqlCommanderRepo(CommanderContext context)
         {
-            throw new System.NotImplementedException();
+            _context = context;
+        }
+
+        public IEnumberable<Command> GetAllCommands(int id)
+        {
+            return _context.Commands.ToList();
         }
 
         public Command GetCommandById(int id)
         {
-            throw new System.NotImplementedException();
+            return _context.Commands.FirstOrDefault(p => p.Id == id);
         }
     }
 }
