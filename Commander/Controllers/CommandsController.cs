@@ -7,9 +7,10 @@ namespace Commander.Controllers
 {
     private readonly ICommanderRepo _repository;
 
-    public CommandsController(ICommanderRepo repository)
+    public CommandsController(ICommanderRepo repository, IMapper mapper)
     {
         _repository = repository;
+        _mapper = mapper;
     }
 
     // api/commands
@@ -18,23 +19,26 @@ namespace Commander.Controllers
     [ApiController]
     public class CommandsController : ControllerBase
     {
-        // private readonly MockCoommanderRepo _repository = new MockCommanderRepo();
         // GET api/commands
         [HttpGet]
-        public ActionResult <IEnumerable<Commander>> GetAllCommands()
+        public ActionResult <IEnumerable<Command>> GetAllCommands()
         {
             var commandItems = _repository.GetAllCommands();
 
             return Ok(commandItems);
         }
 
-        // GET api/commands/1
+        // GET api/commands/{id}
         [HttpGet("{id}")]
-        public ActionResult <Commander> GetCommandById(int id)
+        public ActionResult <CommandReadDto> GetCommandById(int id)
         {
             var commandItems = _repository.GetCommandById(id);
+            if(commandItems != null)
+            {
+                return Ok(_mapper.Map<CommandReadDto>(commandItems));
+            }
 
-            return Ok(commandItems);
+            return NotFound();
         }
     }
 }
