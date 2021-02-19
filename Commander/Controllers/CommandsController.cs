@@ -51,7 +51,6 @@ namespace Commander.Controllers
 
             var commandReadDto = _mapper.Map<CommandReadDto>(commandModel);
 
-            // return Ok(commandReadDto);
             return CreateAtRoute(nameof(GetCommandById), new {Id = commandReadDto.Id}, commandReadDto);
         }
 
@@ -60,13 +59,13 @@ namespace Commander.Controllers
         public ActionResult UpdateCommand(int id, CommandCreateDto commandUpdateDto)
         {
             var commandModelFromRepo = _repository.GetCommandById(id);
-            if(commandModelFromRepo == null)
-            {
-                return NotFound();
-            }
+            if(commandModelFromRepo == null) return NotFound();
 
             _mapper.Map(commandUpdateDto, commandModelFromRepo);
             _repository.UpdateCommand(commandModelFromRepo);
+            _repository.SaveChanges();
+
+            return NoContent();
         }
     }
 }
