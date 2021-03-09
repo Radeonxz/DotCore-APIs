@@ -55,7 +55,7 @@ namespace Commander.Controllers
         }
 
         // PUT api/commands
-        [HttpPut]
+        [HttpPut("{id}")]
         public ActionResult UpdateCommand(int id, CommandCreateDto commandUpdateDto)
         {
             var commandModelFromRepo = _repository.GetCommandById(id);
@@ -66,6 +66,16 @@ namespace Commander.Controllers
             _repository.SaveChanges();
 
             return NoContent();
+        }
+
+        // PATCH api/commands/{id}
+        [HttpPatch("{id}")]
+        public ActionResult PartialCommandUpdate(int id, JsonPatchDocument<CommandUpdateDto> patchDoc)
+        {
+            var commandModelFromRepo = _repository.GetCommandById(id);
+            if(commandModelFromRepo == null) return NotFound();
+
+            var commandToPatch = _mapper.Map<CommandUpdateDto>(commandModelFromRepo);
         }
     }
 }
