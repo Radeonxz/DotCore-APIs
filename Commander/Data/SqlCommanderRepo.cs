@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Commander.Models;
+
 namespace Commander.Data
 {
     public class SqlCommanderRepo : ICommanderRepo
@@ -9,17 +14,7 @@ namespace Commander.Data
             _context = context;
         }
 
-        public void CreateCommand(Command cmd)
-        {
-            if(cmd == null)
-            {
-                throw new ArgumentNullException(nameof(cmd));
-            }
-
-            _context.Commands.Add(cmd);
-        }
-
-        public IEnumberable<Command> GetAllCommands(int id)
+        public IEnumerable<Command> GetAllCommands(int id)
         {
             return _context.Commands.ToList();
         }

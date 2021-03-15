@@ -1,24 +1,28 @@
+using AutoMapper;
 using System.Collections.Generic;
 using Commander.Data;
+using Commander.Dtos;
 using commander.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Commander.Controllers
 {
-    private readonly ICommanderRepo _repository;
-
-    public CommandsController(ICommanderRepo repository, IMapper mapper)
-    {
-        _repository = repository;
-        _mapper = mapper;
-    }
-
     // api/commands
     // [Route("api/[controller]")]
     [Route("api/commands")]
     [ApiController]
     public class CommandsController : ControllerBase
     {
+        private readonly ICommanderRepo _repository;
+        private readonly IMapper _mapper;
+
+        public CommandsController(ICommanderRepo repository, IMapper mapper)
+        {
+            _repository = repository;
+            _mapper = mapper;
+        }
+
         // GET api/commands
         [HttpGet]
         public ActionResult <IEnumerable<CommandReadDto>> GetAllCommands()
@@ -83,6 +87,19 @@ namespace Commander.Controllers
             }
 
             _mapper.Map(commandToPatch, commandModelFromRepo);
+            _repository.UpdateCommand(commandModelFromRepo);
+            _repository.SaveChanges();
+            return NoContent();
+        }
+
+        // DELETE api/commands/{id}
+        [HttpDelete("{id}")]
+        public ActionResult DeleteCommand(int id)
+        {
+            var commandModelFromRepo = _repository.GetCommandById(id);
+            if(commandModelFromRepo == null) return NotFound();
+
+            _repository.DeleteCommand(commandModelFromRepo);
             _repository.SaveChanges();
             return NoContent();
         }
