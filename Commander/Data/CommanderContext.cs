@@ -1,3 +1,4 @@
+using Commander.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Commander.Data

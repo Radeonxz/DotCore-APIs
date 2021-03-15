@@ -17,7 +17,7 @@ namespace Commander.Data
             return commands;
         }
 
-        public Command GetAppCommands(int id)
+        public Command GetCommandById(int id)
         {
             return new Command{Id = 0; HowTo = "Dummy data", Line = "Dummy line", Platform = "c#"};
         }
