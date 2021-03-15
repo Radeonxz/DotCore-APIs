@@ -21,5 +21,15 @@ namespace Commander.Data
         {
             return new Command{Id = 0; HowTo = "Dummy data", Line = "Dummy line", Platform = "c#"};
         }
+
+        public void CreateCommand(Command cmd)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DeleteCommand(Command cmd)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
