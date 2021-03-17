@@ -14,26 +14,6 @@ namespace Commander.Data
             _context = context;
         }
 
-        public IEnumerable<Command> GetAllCommands(int id)
-        {
-            return _context.Commands.ToList();
-        }
-
-        public Command GetCommandById(int id)
-        {
-            return _context.Commands.FirstOrDefault(p => p.Id == id);
-        }
-
-        public bool SaveChanges()
-        {
-            return (_context.SaveChanges() >= 0);
-        }
-
-        public void UpdateCommand()
-        {
-            
-        }
-
         public void CreateCommand(Command cmd)
         {
             if(cmd == null)
@@ -50,8 +30,27 @@ namespace Commander.Data
             {
                 throw new ArgumentNullException(nameof(cmd));
             }
-
             _context.Commands.Remove(cmd);
+        }
+
+        public IEnumerable<Command> GetAllCommands()
+        {
+            return _context.Commands.ToList();
+        }
+
+        public Command GetCommandById(int id)
+        {
+            return _context.Commands.FirstOrDefault(p => p.Id == id);
+        }
+
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() >= 0);
+        }
+
+        public void UpdateCommand(Command cmd)
+        {
+            //Nothing
         }
     }
 }
